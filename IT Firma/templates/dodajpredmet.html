@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container boje">
+    <p class="my-5 korisnik-p">NOVI PROJEKAT</p>
+
+    <form action={{ url_for("dodajpredmet") }} method="POST">
+
+        <div class="row col-4 sifra-input form-group">
+            <label for="sifra">Sifra projekta :</label>
+            <input type="text" name="sifra" class="form-control" id="sifra" required>
+        </div>
+
+        <div class="row col-4 naziv-input">
+            <label for="naziv">Naziv projekta :</label>
+            <input type="text" name="naziv" class="form-control" id="naziv" required>
+        </div>
+
+        <div class="row col-4 status-input">
+            <label for="status">Status :</label>
+            <!-- <input type="password" class="form-control" id="passInput" required> -->
+            <select name="status" name="status" id="status" class="form-select form-select-lg mb-3">
+                <option value="U izradi" default>U izradi</option>
+                <option value="Zavrsen">Zavrsen</option>
+            </select>
+        </div>
+
+        <input type="submit" id="dodajSubmit" class="btn btn-warning my-2" value="Dodaj Projekat">
+    </form>
+</div>
+{% endblock %}

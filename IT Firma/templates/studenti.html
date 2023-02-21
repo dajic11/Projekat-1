@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}  
+            </tbody>
+      
+        </table>
+    </div>
+</div>
+<!-- OVDE DOLE KRECE DODAVANJE I IZMENA RADNIKA -->
+
+<div class="container">
+  <div class="mt-5 mb-0 d-flex gap-2 justify-content-end margina">
+
+      {% if(rola == 'admin') %}
+      <a href={{ url_for("dodajstudenta") }} role="button" class="btn btn-warning justify-content-end">Dodaj
+          Zaposlenog</a>
+
+      <a href={{ url_for('export', tip="studenti" ) }} role="button" class="btn btn-danger mr-3">Export podataka</a>
+      {% endif %}
+  </div>
+<!-- Ovde je kartica za radnika -->
+{% for student in studenti %}
+<section class="vh-10" style="background-color: #212529;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center text-black"
+                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                <img {%if student.slika%} src="/static/uploads/{{ student.slika }}" {%else%} src="/static/placeholder.png" {%endif%} id="slika_pregled" />
+                <h5>{{ student.ime }}</h5>
+                <p>Web Designer</p>
+                <i class="far fa-edit mb-5"></i>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>Kontakt</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">{{ student.email }}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Phone</h6>
+                      <p class="text-muted">{{ student.broj_telefona }}</p>
+                    </div>
+                  </div>
+                  <h6>Informacije</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Datum rodjenja</h6>
+                      <p class="text-muted">{{ student.datum_rodjenja}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Adresa radnog mesta :</h6>
+                      <p class="text-muted">Beograd 1070 Milentija Popovića 1.</p> <!-- ovde smo ubacili izmenu i brisanje korisnika --> 
+                      
+                        <a href={{ url_for("student", id=student.id ) }} role="button" class="text-primary mx-1">
+                            <i class="far fa-eye"></i>
+                        </a>
+
+                        {% if(rola == 'admin') %}
+                        <a href={{ url_for("izmenistudenta", id=student.id ) }} role="button" class="text-warning mx-1">
+                            <i class="far fa-edit"></i>
+                        </a>
+
+                        <button class="text-danger mx-1" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal{{student.id}}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        {%endif%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+  <div class="modal fade" id="deleteModal{{student.id}}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                Da li si siguran da zelis da obrises studenta {{ student.ime }} {{ student.prezime }}?
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Odustani
+                </button>
+
+                <form action={{url_for("izbrisistudenta", id=student.id) }} method="post"
+                    class="text-danger mx-1">
+                    <button class="btn btn-danger">Obrisi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  {% endfor %}
+
+{% endblock %}

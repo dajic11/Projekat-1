@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container boje">
+    <p class="my-5 korisnik-p">Izmeni Radnika :</p>
+
+    <form action={{ url_for("izmenistudenta", id=student.id ) }} method="POST" enctype="multipart/form-data">
+
+        <div class="row col-4 index-input form-group mb-5">
+            <div class="container d-flex flex-row dodajsliku align-items-center gap-3">
+                <label for="student_slika" class="student_slika">
+                    <img {% if student.slika %} src="/static/uploads/{{student.slika}}" {% else %}
+                        src="/static/img/placeholder.png" {% endif %} id="student_slika1" alt="student_slika">
+                </label>
+                <label for="slika" class="btn btn-primary dodajslikubtn" name="slika">Odaberi sliku :</label>
+            </div>
+            <input type="file" accept="image/*" hidden id="slika" name="slika">
+        </div>
+
+        <div class="row col-4 korisnik-input form-group">
+            <label for="nameInput">Ime radnika :</label>
+            <input type="text" class="form-control" name="nameInput" id="nameInput" required value={{student.ime}}>
+        </div>
+
+        <div class="row col-4 korisnik-input form-group">
+            <label for="nameInput">Ime roditelja :</label>
+            <input type="text" class="form-control" name="nameRoditeljInput" id="nameInput" required
+                value={{student.ime_roditelja}}>
+        </div>
+
+        <div class="row col-4 korisnik-input">
+            <label for="nameInput">Prezime : </label>
+            <input type="text" class="form-control" name="prezimeInput" id="prezimeInput" required
+                value={{student.prezime}}>
+        </div>
+
+        <div class="row col-4 korisnik-input">
+            <label for="nameInput">E-Mail :</label>
+            <input type="email" class="form-control" name="emailInput" id="emailInput" required value={{student.email}}>
+        </div>
+
+        <div class="row col-4 korisnik-input">
+            <label for="passInput">Broj telefona :</label>
+            <input type="text" class="form-control" name="telInput" id="telInput" required
+                value={{student.broj_telefona}}>
+        </div>
+
+        <div class="row col-4 korisnik-input">
+            <label for="birthInput">Datum rodjenja :</label>
+            <input type="date" class="form-control" name="birthInput" id="birthInput" required
+                value={{student.datum_rodjenja}}>
+        </div>
+
+        <div class="row col-4 korisnik-input">
+            <label for="jmbgInput">JMBG :</label>
+            <input type="text" class="form-control" name="jmbgInput" id="jmbgInput" required value={{student.jmbg}}>
+        </div>
+
+
+        <input type="submit" id="dodajSubmit" class="btn btn-primary my-2" value="Sacuvaj promene">
+    </form>
+</div>
+{% endblock %}

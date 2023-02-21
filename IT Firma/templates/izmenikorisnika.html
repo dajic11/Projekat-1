@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container boje">
+    <p class="my-5 korisnik-p">IZMENI KORISNIKA</p>
+
+    <form action={{ url_for("izmenikorisnika", id=korisnik.id ) }} method="POST">
+
+        <div class="row col-4 korisnik-input form-group">
+            <label for="nameInput">Ime :</label>
+            <input type="text" class="form-control" id="nameInput" name="ime" value={{korisnik.ime}} required>
+        </div>
+
+        <div class="row col-4 korisnik-input">
+            <label for="nameInput">Prezime :</label>
+            <input type="text" class="form-control" id="prezimeInput" name="prezime" value={{korisnik.prezime}}
+                required>
+        </div>
+
+        <div class="row col-4 korisnik-input">
+            <label for="nameInput">E-Mail :</label>
+            <input type="email" class="form-control" id="emailInput" name="email" value={{korisnik.email}} required>
+        </div>
+
+        <div class="row col-4">
+            <label for="rola">Rola :</label>
+            <select name="rola" id="rola" value={{korisnik.rola}} name="rola"
+                class="form-control form-select korisnik-input">
+                <option value="admin">Admin</option>
+                <option value="profesor">Radnik</option>
+                <option value="student">Korisnik</option>
+            </select>
+        </div>
+
+        <div class="row col-4 korisnik-input">
+            <label for="passInput">Lozinka :</label>
+            <input type="password" class="form-control" id="passInput" name="lozinka" value={{korisnik.lozinka}}
+                required>
+        </div>
+
+        <input type="submit" id="dodajSubmit" class="btn btn-primary my-2" value="izmeni korisnika">
+    </form>
+</div>
+{% endblock %}

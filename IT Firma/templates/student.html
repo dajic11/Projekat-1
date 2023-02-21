@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+
+        <div class="col-6 mt-5">
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <img {%if student.slika%} src="/static/uploads/{{ student.slika }}" {%else%}
+                                src="/static/placeholder.png" {%endif%} id="slika_pregled" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Ime</th>
+                        <td>{{student.ime}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ime roditelja</th>
+                        <td>{{student.ime_roditelja}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Prezime</th>
+                        <td>{{student.prezime}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Broj indeksa</th>
+                        <td>{{student.broj_indeksa}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Broj telefona</th>
+                        <td>{{student.broj_telefona}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>{{student.email}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Datum rodjenja</th>
+                        <td>{{student.datum_rodjenja}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">JMBG</th>
+                        <td>{{student.jmbg}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ukupno ESPB</th>
+                        <td>{{student.espb}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Prosek ocena</th>
+                        <td>{{student.prosek_ocena}}</td>
+                    </tr>
+                    {% if(rola == 'admin') %}
+                    <tr>
+                        <th scope="row">Akcije</th>
+                        <td>
+                            <a href={{ url_for("izmenistudenta",id=student.id) }} role="button"
+                                class="text-warning mx-1">
+                                <i class="far fa-edit"></i>
+                            </a>
+                            <a href={{ url_for("izbrisistudenta",id=student.id) }} role="button"
+                                class="text-danger mx-1">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+
+                </tbody>
+            </table>
+        </div>
+        {% if(rola == 'admin' or rola == 'profesor') %}
+        <div class="col-6 mt-5">
+            <form action={{ url_for("dodajocenu", id=student.id) }} method="POST">
+                <div class="form-group">
+                    <label for="predmet">Predmet</label>
+                    <select name="predmet" class="form-select">
+                        <option value="default" disabled selected>Odaberi predmet</option>
+                        {% for predmet in predmeti %}
+                        <option value={{ predmet.id }}>{{ predmet.naziv }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Ocena</label>
+                    <input type="text" name="ocena" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Datum</label>
+                    <input type="date" name="datum" class="form-control" required>
+                </div>
+                <div class="d-flex align-items-center justify-content-center position-absolute my-3">
+                    <input type="submit" class="btn btn-primary" role="button" value="Dodaj ocenu">
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Sifra</th>
+                        <th scope="col">Naziv</th>
+                        <th scope="col">Godina Studija</th>
+                        <th scope="col">ESPB</th>
+                        <th scope="col">Obavezni / Izborni</th>
+                        <th scope="col">Ocena</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ocena in ocene %}
+                    <tr class="table-active">
+                        <td>{{ocena.sifra}}</td>
+                        <td>{{ocena.naziv}}</td>
+                        <td>{{ocena.godina_studija}}</td>
+                        <td>{{ocena.espb}}</td>
+                        <td>{{ocena.status}}</td>
+                        <td>{{ocena.ocena}}</td>
+                        <td>{{ocena.datum}}</td>
+                        <td colspan="2">
+                            <a href={{ url_for("izmeniocenu", id=ocena.id) }} role="button" class="text-warning mx-1">
+                                <i class="far fa-edit"></i>
+                            </a>
+
+                            <a href={{ url_for("izbrisiocenu", id=ocena.id) }} role="button" class="text-danger mx-1">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

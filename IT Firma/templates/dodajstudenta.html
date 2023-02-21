@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container boje">
+    <p class="my-5 korisnik-p">NOVI ZAPOSLENI</p>
+
+    <form action={{ url_for("dodajstudenta") }} method="POST" enctype="multipart/form-data">
+
+        <div class="row col-4 index-input form-group mb-5">
+            <div class="container d-flex flex-row dodajsliku align-items-center gap-3">
+                <label for="student_slika" class="student_slika">
+                    <img src="/static/img/placeholder.png" id="student_slika1" alt="student_slika">
+                </label>
+                <label for="slika" class="btn btn-warning dodajslikubtn">Odaberi sliku</label>
+            </div>
+            <input type="file" accept="image/*" hidden id="slika" name="slika">
+        </div>
+
+
+        <div class="row col-4 ime-input form-group">
+            <label for="nameInput">Ime zaposlenog :</label>
+            <input type="text" class="form-control" id="nameInput" name="nameInput" required>
+        </div>
+
+        <div class="row col-4 ime-roditelja-input form-group">
+            <label for="nameInput">Ime roditelja :</label>
+            <input type="text" class="form-control" id="nameRoditeljInput" name="nameRoditeljInput" required>
+        </div>
+
+        <div class="row col-4 prezime-input">
+            <label for="nameInput">Prezime :</label>
+            <input type="text" class="form-control" id="prezimeInput" name="prezimeInput" required>
+        </div>
+
+        <div class="row col-4 email-input">
+            <label for="nameInput">E-Mail adresa :</label>
+            <input type="email" class="form-control" id="emailInput" name="emailInput" required>
+        </div>
+
+        <div class="row col-4 broj-input">
+            <label for="passInput">Broj telefona :</label>
+            <input type="text" class="form-control" id="telInput" name="telInput" required>
+        </div>
+
+        <div class="row col-4 rodjenje-input">
+            <label for="birthInput">Datum rodjenja</label>
+            <input type="date" class="form-control" name="birthInput" id="birthInput" required>
+        </div>
+
+        <div class="row col-4 jmbg-input">
+            <label for="jmbgInput">JMBG</label>
+            <input type="text" class="form-control" name="jmbgInput" id="jmbgInput" required>
+        </div>
+
+
+        <input type="submit" id="dodajSubmit" class="btn btn-warning my-2" value="dodaj Studenta">
+    </form>
+</div>
+{% endblock %}
